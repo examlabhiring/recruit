@@ -1186,6 +1186,40 @@
         opacity: 1;
         transform: translateY(0);
       }
+      /* Instagram browser banner */
+      .ig-banner {
+        display: none;
+        background: #fef3c7;
+        color: #92400e;
+        padding: 12px 20px;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-bottom: 1px solid #fcd34d;
+        position: fixed;
+        top: 80px; /* below your nav */
+        left: 0;
+        right: 0;
+        z-index: 1010;
+        backdrop-filter: blur(10px);
+        background: rgba(254, 243, 199, 0.95);
+      }
+      .ig-banner a {
+        color: #b45309;
+        font-weight: 700;
+        text-decoration: underline;
+        margin: 0 6px;
+      }
+      .ig-banner button {
+        background: none;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        color: #92400e;
+        font-size: 0.85rem;
+        margin-left: 8px;
+        text-decoration: underline;
+      }
 
       @media (max-width: 768px) {
         .nav-links {
@@ -1279,6 +1313,15 @@
     </style>
   </head>
   <body>
+    <!-- Instagram browser reminder -->
+    <div class="ig-banner" id="igBanner">
+      📱 For a better experience, open this page in your browser.
+      <button
+        onclick="document.getElementById('igBanner').style.display = 'none'"
+      >
+        ✕ Dismiss
+      </button>
+    </div>
     <!-- NAVIGATION -->
     <nav class="nav" id="navbar">
       <div class="nav-container">
@@ -2214,6 +2257,15 @@
         }
         window.addEventListener("scroll", updateNav, { passive: true });
         updateNav();
+        // Detect Instagram in-app browser
+        (function () {
+          const ua = navigator.userAgent || "";
+          const isInstagram = /Instagram/i.test(ua);
+          const banner = document.getElementById("igBanner");
+          if (isInstagram && banner) {
+            banner.style.display = "block";
+          }
+        })();
 
         function closeMenu() {
           navLinks.classList.remove("active");
